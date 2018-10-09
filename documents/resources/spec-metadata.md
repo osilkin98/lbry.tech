@@ -1,15 +1,19 @@
-# LBRY Claim Metadata Schema
+# Spec: Metadata
 
-The schema defines the structure of the data that is stored in claims in the LBRY blockchain. It has several goals:
+The metadata specification defines the structure of the data that is stored in claims in the LBRY blockchain. It has several goals:
 
-- **Extensibility**. The schema could grow to encompass thousands of fields for dozens of types of content. It should be easy to modify the schema while maintaining backward compatibility. Blockchain data is permanent and cannot be migrated, so any selected data structure will have to be maintained forever.
-- **Compactness**. Blockchain space is expensive. Data should be stored as compactly  as possible.
+- **Extensibility**. The structure could grow to encompass thousands of fields for dozens of types of content. It should be easy to modify the structure while maintaining backward compatibility. Blockchain data is permanent and cannot be migrated, so any selected data structure will have to be maintained forever.
+- **Compactness**. Blockchain space is expensive. Data should be stored as compactly as possible.
 - **Cross-language Interop**. These definitions will be used by many projects written in different languages.
 
+## Encoding
 
-## [Claim](https://github.com/lbryio/lbryschema/blob/master/lbryschema/proto/claim.proto)
+Metadata is serialized using [Protocol Buffers](https://developers.google.com/protocol-buffers/). 
 
-A `Claim` is the toplevel schema for everything that is published to the blockchain.
+
+## [Claim](https://github.com/lbryio/types/blob/master/proto/claim.proto)
+
+A `Claim` is the top-level container for everything that is published to the blockchain.
 
 ```protobuf
 message Claim {
@@ -35,7 +39,7 @@ message Claim {
 
 ## Content
 
-### [Stream](https://github.com/lbryio/lbryschema/blob/master/lbryschema/proto/stream.proto)
+### [Stream](https://github.com/lbryio/types/blob/master/proto/stream.proto)
 
 All content claims have a Stream field, which includes the content-specific information (e.g. a description of the content, instructions for downloading the content, etc).
 
@@ -52,7 +56,7 @@ message Stream {
 }
 ```
 
-### [Metadata](https://github.com/lbryio/lbryschema/blob/master/lbryschema/proto/metadata.proto)
+### [Metadata](https://github.com/lbryio/types/blob/master/proto/metadata.proto)
 
 `Metadata` provides information about a piece of content, such as the title, description, and price.
 
@@ -87,7 +91,7 @@ message Metadata {
 }
 ```
 
-### [Fee](https://github.com/lbryio/lbryschema/blob/master/lbryschema/proto/fee.proto)
+### [Fee](https://github.com/lbryio/types/blob/master/proto/fee.proto)
 
 A `Fee` defines the prices for accessing a piece of content.
 
@@ -112,7 +116,7 @@ message Fee {
 }
 ```
 
-### [Source](https://github.com/lbryio/lbryschema/blob/master/lbryschema/proto/source.proto)
+### [Source](https://github.com/lbryio/types/blob/master/proto/source.proto)
 
 A `Source` contains information on how to download a stream. Only the LBRY data network is supported at the moment, but other sources may be added in the future.
 
@@ -148,7 +152,7 @@ enum KeyType {
 }
 ```
 
-### [Certificate](https://github.com/lbryio/lbryschema/blob/master/lbryschema/proto/certificate.proto)
+### [Certificate](https://github.com/lbryio/types/blob/master/proto/certificate.proto)
 
 Creating a channel involves making a `certificateType` claim. This claim contains the public key for a channel. It must include a Certificate field:
 
@@ -166,7 +170,7 @@ message Certificate {
 ```
 
 
-### [Signature](https://github.com/lbryio/lbryschema/blob/master/lbryschema/proto/signature.proto)
+### [Signature](https://github.com/lbryio/types/blob/master/proto/signature.proto)
 
 Publishing a claim to a channels simply means that the claim is signed using the private key for a channel. This is done by including a Signature field in a Claim:
 
